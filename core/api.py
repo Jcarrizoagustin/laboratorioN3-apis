@@ -15,6 +15,7 @@ class OrdenViewSet(viewsets.ModelViewSet):
 
 
 
+
 class DetalleOrdenViewSet(viewsets.ModelViewSet):
     queryset = DetalleOrden.objects.all()
     serializer_class = DetalleOrdenSerializer

@@ -28,14 +28,14 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         orden = request.data.get('orden')
-        cantidad = request.get('cantidad')
+        cantidad = request.data.get('cantidad')
         producto = request.data.get('producto')
 
         detalle = DetalleOrden.objects.filter(orden_id=orden, producto_id=producto).first()
         if detalle:
             detalle.cantidad += int(cantidad)
             detalle.save()
-            return Response(status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_201_CREATED)
 
         return super().create(request, *args, **kwargs)
     

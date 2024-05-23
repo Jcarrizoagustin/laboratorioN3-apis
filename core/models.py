@@ -41,7 +41,7 @@ class DetalleOrden(models.Model):
         else:
             detalle_orden_actual = DetalleOrden.objects.get(pk=self.pk)
             self.producto.stock += detalle_orden_actual.cantidad - self.cantidad
-        if self.producto < 0:
+        if self.producto.stock < 0:
             raise ValueError("No hay suficiente Stock")
         
         self.producto.save()

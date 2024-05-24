@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'coreapi',
     'core',
     'rest_framework',
 ]
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = { 
 'DEFAULT_RENDERER_CLASSES': [
 'rest_framework.renderers.JSONRenderer', 
-'rest_framework.renderers.BrowsableAPIRenderer'], 
+'rest_framework.renderers.BrowsableAPIRenderer',],
+'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 

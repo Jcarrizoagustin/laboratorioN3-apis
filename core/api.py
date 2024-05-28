@@ -37,7 +37,7 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
         orden_id = self.kwargs['orden_pk']
         return DetalleOrden.objects.filter(orden=orden_id)
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
         orden_id = self.kwargs['orden_pk']
         cantidad = int(self.request.data.get('cantidad'))
         producto_id = self.request.data.get('producto')
@@ -48,15 +48,19 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
         if (producto.stock >= cantidad):
             if existe_producto_en_orden_validator(orden, producto):
                 detalle = DetalleOrden.objects.filter(orden = orden_id, producto = producto_id).first()
-                detalle.cantidad = int(cantidad)
+                detalle.cantidad = detalle.cantidad + int(cantidad)
                 detalle.save()
-                return Response(detalle,status = status.HTTP_200_OK)
+                producto.stock = producto.stock - cantidad
+                producto.save()
+                serializer = self.get_serializer(detalle)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 detalle = DetalleOrden(None,orden_id,cantidad,producto_id)
                 detalle.save()
                 producto.stock = producto.stock - cantidad
                 producto.save()
-                return Response(detalle)
+                serializer = self.get_serializer(detalle)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response({'error':'No tenemos suficiente stock.'}, status=status.HTTP_409_CONFLICT)
 

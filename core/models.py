@@ -30,24 +30,10 @@ class Orden(models.Model):
         valor_en_usd = valor_orden/valor_usd_blue
         return valor_en_usd.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP) #Se devuelve el valor redondeado
 
+    def __str__(self):
+        return f'{self.id} - {self.fecha_hora}'
+
 class DetalleOrden(models.Model):
     orden = models.ForeignKey(Orden,on_delete=models.CASCADE,blank=False)
     cantidad = models.PositiveSmallIntegerField()
     producto = models.ForeignKey(Producto,on_delete=models.CASCADE,blank=False)
-
-    def save(self,*args, **kwargs):
-        if self.pk is None:
-            self.producto.stock -= self.cantidad
-        else:
-            detalle_orden_actual = DetalleOrden.objects.get(pk=self.pk)
-            self.producto.stock += detalle_orden_actual.cantidad - self.cantidad
-        if self.producto.stock < 0:
-            raise ValueError("No hay suficiente Stock")
-        
-        self.producto.save()
-        return super().save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        self.producto.stock += self.cantidad
-        self.producto.save()
-        super().delete(*args, **kwargs)

@@ -15,7 +15,7 @@ class DetalleOrdenSerializer(serializers.ModelSerializer):
     class Meta:
         model = DetalleOrden
         fields = '__all__'
-        read_only_fields = ['orden']
+        read_only_fields = ['orden','precio']
 
 class OrdenSerializer(serializers.ModelSerializer):
     

@@ -21,7 +21,7 @@ class Orden(models.Model):
         items = DetalleOrden.objects.filter(orden = self.id)
         total = 0
         for item in items:
-            total += (item.producto.precio * item.cantidad)
+            total += item.precio
         return total
 
     def get_total_usd(self):
@@ -37,3 +37,8 @@ class DetalleOrden(models.Model):
     orden = models.ForeignKey(Orden,on_delete=models.CASCADE,blank=False)
     cantidad = models.PositiveSmallIntegerField()
     producto = models.ForeignKey(Producto,on_delete=models.CASCADE,blank=False)
+    precio = models.DecimalField(max_digits=9,decimal_places=2,null=True)
+
+    def save(self, *args, **kwargs):
+        self.precio = self.producto.precio * self.cantidad
+        super().save(*args, **kwargs)

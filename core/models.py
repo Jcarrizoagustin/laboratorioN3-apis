@@ -36,7 +36,7 @@ class Orden(models.Model):
 class DetalleOrden(models.Model):
     orden = models.ForeignKey(Orden,on_delete=models.CASCADE)
     cantidad = models.PositiveSmallIntegerField()
-    producto = models.ForeignKey(Producto,on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto,null=True,on_delete=models.SET_NULL)
     precio = models.DecimalField(max_digits=9,decimal_places=2,null=True)
 
     def save(self, *args, **kwargs):

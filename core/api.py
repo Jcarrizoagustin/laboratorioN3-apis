@@ -81,3 +81,6 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except NotFound:
             return Response(status=status.HTTP_404_NOT_FOUND)
+        except AttributeError:
+            self.perform_destroy(instance)
+            return Response(status=status.HTTP_204_NO_CONTENT)

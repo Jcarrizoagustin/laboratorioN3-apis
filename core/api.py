@@ -5,7 +5,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.mixins import CreateModelMixin
 from .serializers import ProductoSerializer, OrdenSerializer, DetalleOrdenSerializer
 from .models import Producto, Orden, DetalleOrden
-from .validators import existe_producto_en_orden_validator
+from .validators import existe_producto_en_orden_validator,validar_cantidad
 
 ## Producto
 class ProductoViewSet(viewsets.ModelViewSet):
@@ -38,10 +38,17 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
         return DetalleOrden.objects.filter(orden=orden_id)
 
     def create(self, request, *args, **kwargs):
+        cantidad = self.request.data.get('cantidad')
         orden_id = self.kwargs['orden_pk']
-        cantidad = int(self.request.data.get('cantidad'))
         producto_id = self.request.data.get('producto')
 
+        try:
+            validar_cantidad(cantidad)
+        except Exception as e:
+            return Response({'error':e.args[0]},status=status.HTTP_400_BAD_REQUEST)
+            
+
+        cantidad = int(cantidad)
         orden = get_object_or_404(Orden, pk=orden_id)
         producto = get_object_or_404(Producto, pk=producto_id)
 

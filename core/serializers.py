@@ -29,6 +29,7 @@ class OrdenSerializer(serializers.ModelSerializer):
     detalles = DetalleOrdenSerializer(many=True, read_only=True)
     total = serializers.SerializerMethodField()
     total_usd = serializers.SerializerMethodField()
+    fecha_hora = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S",read_only=True)
     
     class Meta:
         model = Orden

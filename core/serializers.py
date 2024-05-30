@@ -14,12 +14,15 @@ class ProductoSerializer(serializers.ModelSerializer):
         return precio
 
 class DetalleOrdenSerializer(serializers.ModelSerializer):
-    #orden = OrdenSerializer()
-    #producto = ProductoSerializer()
+    product = serializers.SerializerMethodField()
     class Meta:
         model = DetalleOrden
-        fields = '__all__'
-        read_only_fields = ['orden','precio']
+        fields = ['id','cantidad','precio','product','producto']
+        read_only_fields = ['orden','precio','product']
+        extra_kwargs = {'producto': {'write_only': True}}
+    
+    def get_product(self,detalle):
+        return ProductoSerializer(detalle.producto).data
 
 class OrdenSerializer(serializers.ModelSerializer):
     

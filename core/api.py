@@ -6,6 +6,7 @@ from rest_framework.mixins import CreateModelMixin
 from .serializers import ProductoSerializer, OrdenSerializer, DetalleOrdenSerializer
 from .models import Producto, Orden, DetalleOrden
 from .validators import existe_producto_en_orden_validator,validar_cantidad
+from .services import disminuir_stock_producto,aumentar_stock_producto,aumentar_cantidad_en_detalle_orden
 
 ## Producto
 class ProductoViewSet(viewsets.ModelViewSet):
@@ -23,8 +24,7 @@ class OrdenViewSet(viewsets.ModelViewSet):
         for detalle in detalle_ordenes:
             #Reestablecemos el stock de los productos antes de eliminar una orden
             product = Producto.objects.filter(id=detalle.producto.id).first()
-            product.stock += detalle.cantidad
-            product.save()
+            aumentar_stock_producto(product,detalle.cantidad)
         return super().destroy(request, *args, **kwargs)
 
 
@@ -55,17 +55,14 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
         if (producto.stock >= cantidad):
             if existe_producto_en_orden_validator(orden, producto):
                 detalle = DetalleOrden.objects.filter(orden = orden_id, producto = producto_id).first()
-                detalle.cantidad = detalle.cantidad + int(cantidad)
-                detalle.save()
-                producto.stock = producto.stock - cantidad
-                producto.save()
+                aumentar_cantidad_en_detalle_orden(detalle,cantidad)
+                disminuir_stock_producto(producto,cantidad)
                 serializer = self.get_serializer(detalle)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 detalle = DetalleOrden(None,orden_id,cantidad,producto_id)
                 detalle.save()
-                producto.stock = producto.stock - cantidad
-                producto.save()
+                disminuir_stock_producto(producto,cantidad)
                 serializer = self.get_serializer(detalle)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
@@ -79,8 +76,7 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
             producto_id = instance.producto.id
             cantidad = int(instance.cantidad)
             producto = get_object_or_404(Producto, pk=producto_id)
-            producto.stock = producto.stock + cantidad
-            producto.save()
+            aumentar_stock_producto(producto,cantidad)
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         except NotFound:

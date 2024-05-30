@@ -84,3 +84,21 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
         except AttributeError:
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
+        
+    def update(self, request, *args, **kwargs):
+        try:
+            cantidad = int(request.data.get('cantidad'))
+            instance = self.get_object()
+            producto = get_object_or_404(Producto,pk=instance.producto.id)
+            diferencia_cantidad = instance.cantidad - cantidad
+            if(diferencia_cantidad > 0):
+                aumentar_stock_producto(producto,diferencia_cantidad)
+            else:
+                disminuir_stock_producto(producto,abs(diferencia_cantidad))
+            instance.cantidad = cantidad
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response({'Error':'No hay sufuciente stock'},status=status.HTTP_409_CONFLICT)
+        

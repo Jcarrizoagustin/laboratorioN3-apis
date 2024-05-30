@@ -7,7 +7,11 @@ class ProductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
         fields = ['id','nombre','precio','stock']
-
+    
+    def validate_precio(self,precio):
+        if precio < 0:
+            raise serializers.ValidationError("El precio debe ser mayor que 0.")
+        return precio
 
 class DetalleOrdenSerializer(serializers.ModelSerializer):
     #orden = OrdenSerializer()

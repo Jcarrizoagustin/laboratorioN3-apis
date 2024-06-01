@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import NotFound
@@ -7,16 +7,21 @@ from .serializers import ProductoSerializer, OrdenSerializer, DetalleOrdenSerial
 from .models import Producto, Orden, DetalleOrden
 from .validators import existe_producto_en_orden_validator,validar_cantidad
 from .services import disminuir_stock_producto,aumentar_stock_producto,aumentar_cantidad_en_detalle_orden
+from .permission import IsSuperUserOrReadOnly
+
 
 ## Producto
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
+    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsSuperUserOrReadOnly]
 
-#Ordenes
+##Ordenes
 class OrdenViewSet(viewsets.ModelViewSet):
     queryset = Orden.objects.all()
     serializer_class = OrdenSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def destroy(self, request, *args, **kwargs):
         instance  = self.get_object()
@@ -32,6 +37,7 @@ class OrdenViewSet(viewsets.ModelViewSet):
 class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
 
     serializer_class = DetalleOrdenSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         orden_id = self.kwargs['orden_pk']
@@ -68,7 +74,6 @@ class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
         else:
             return Response({'error':'No tenemos suficiente stock.'}, status=status.HTTP_409_CONFLICT)
 
-        
     
     def destroy(self, request, *args, **kwargs):
         try:

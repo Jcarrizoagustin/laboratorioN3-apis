@@ -14,7 +14,6 @@ from .permission import IsSuperUserOrReadOnly
 class ProductoViewSet(viewsets.ModelViewSet):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
-    #permission_classes = [permissions.IsAuthenticated]
     permission_classes = [IsSuperUserOrReadOnly]
 
 ##Ordenes
@@ -22,6 +21,7 @@ class OrdenViewSet(viewsets.ModelViewSet):
     queryset = Orden.objects.all()
     serializer_class = OrdenSerializer
     permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [IsSuperUserOrReadOnly]
 
     def destroy(self, request, *args, **kwargs):
         instance  = self.get_object()
@@ -35,7 +35,7 @@ class OrdenViewSet(viewsets.ModelViewSet):
 
 #Detalle Orden
 class DetalleOrdenViewSet(viewsets.ModelViewSet,CreateModelMixin):
-
+    
     serializer_class = DetalleOrdenSerializer
     permission_classes = [permissions.IsAuthenticated]
 

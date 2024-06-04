@@ -21,7 +21,6 @@ class OrdenViewSet(viewsets.ModelViewSet):
     queryset = Orden.objects.all()
     serializer_class = OrdenSerializer
     permission_classes = [permissions.IsAuthenticated]
-    #permission_classes = [IsSuperUserOrReadOnly]
 
     def destroy(self, request, *args, **kwargs):
         instance  = self.get_object()

@@ -154,12 +154,24 @@ def test_get_total(crear_orden,crear_productos):
             producto=producto2,
             precio = producto2.precio
         )
-    #detalle_orden.precio -> devuelve el resultado de (precio * cantidad)
-    valor_subtotal_esperado = (detalle_orden1.precio+detalle_orden2.precio)
-    valor_subtotal_orden = orden.get_total()
+    
+    valor_esperado_detalle1 = producto1.precio * detalle_orden1.cantidad
+    valor_esperado_detalle2 = producto2.precio * detalle_orden2.cantidad
 
-    #Verificar valor totol
-    assert valor_subtotal_esperado == valor_subtotal_orden
+    #Recordar: "detalle_orden.precio" -> devuelve el resultado de (precio * cantidad)
+
+    #Verificar valor subtotol detalle_orden1
+    assert valor_esperado_detalle1 == detalle_orden1.precio
+
+    #Verificar valor subtotal detalle_orden2
+    assert valor_esperado_detalle2 == detalle_orden2.precio
+
+    #Verificar valor total Orden
+    valor_total_esperdo_orden = (detalle_orden1.precio+detalle_orden2.precio)
+    valor_orden = orden.get_total()
+    
+    assert valor_total_esperdo_orden == valor_orden
+
 
 
 

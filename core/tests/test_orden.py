@@ -99,11 +99,6 @@ def test_eliminar_orden(api_client, crear_orden, crear_producto):
     #Verificamos que el detalle exite en la BD
     assert DetalleOrden.objects.filter(orden=orden).exists()
 
-    #Verificamos que el Stock se ha decrementado
-    #producto.refresh_from_db()
-    #stock_esperado = stock_inicial - detalle_orden.cantidad
-    #assert producto.stock == stock_esperado
-    
     #Forma 1 - Realizamos la solucitud DELETE
     response1 = client.delete(f'/api/v1/ordenes/{orden.pk}/')
     
@@ -139,6 +134,34 @@ Ejercicio N° 6 -
     Verificar que el método get_total de una orden, devuelve el valor correcto de acuerdo
     al sub-total de cada detalle. 
 '''
+
+@pytest.mark.django_db
+def test_get_total(crear_orden,crear_productos):
+    orden = crear_orden
+    producto1, producto2 = crear_productos
+
+    #Creamos DetalleOrden con 2 productos
+    detalle_orden1 = DetalleOrden.objects.create(
+            orden=orden,
+            cantidad=2,
+            producto=producto1,
+            precio = producto1.precio
+        )
+    
+    detalle_orden2 = DetalleOrden.objects.create(
+            orden=orden,
+            cantidad=3,
+            producto=producto2,
+            precio = producto2.precio
+        )
+    #detalle_orden.precio -> devuelve el resultado de (precio * cantidad)
+    valor_subtotal_esperado = (detalle_orden1.precio+detalle_orden2.precio)
+    valor_subtotal_orden = orden.get_total()
+
+    #Verificar valor totol
+    assert valor_subtotal_esperado == valor_subtotal_orden
+
+
 
 '''
 Ejercicio N° 7 - 

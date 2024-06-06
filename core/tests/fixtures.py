@@ -24,12 +24,12 @@ def crear_producto():
 def crear_productos():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Remera',
-        precio = 15000.00,
+        precio = 15.00,
         stock = 3
     )
     producto2, _ = Producto.objects.get_or_create(
         nombre = 'Jean',
-        precio = 18500.00,
+        precio = 18.00,
         stock = 4
     )
     return [producto,producto2]

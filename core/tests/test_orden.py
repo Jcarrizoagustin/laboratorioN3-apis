@@ -1,6 +1,8 @@
 from .fixtures import api_client,crear_producto,crear_productos,crear_orden #,crear_detalle_orden
 from core.models import DetalleOrden, Orden, Producto
 from django.urls import reverse
+from unittest import mock
+from decimal import Decimal, ROUND_HALF_UP
 import pytest
 
 API_BASE_URL= '/api/v1'
@@ -134,7 +136,6 @@ Ejercicio N° 6 -
     Verificar que el método get_total de una orden, devuelve el valor correcto de acuerdo
     al sub-total de cada detalle. 
 '''
-
 @pytest.mark.django_db
 def test_get_total(crear_orden,crear_productos):
     orden = crear_orden
@@ -181,3 +182,29 @@ Ejercicio N° 7 -
     acuerdo al total de la orden y la cotización del dólar blue (considerar “mockear” el valor
     del dólar blue, simulando la respuesta de la API externa). 
 '''
+
+@pytest.mark.django_db
+@mock.patch("core.models.get_usd_from_api")
+def test_get_total_usd(monck_response, crear_orden, crear_producto):
+    
+    monck_response.return_value = Decimal('800.00') #Cotización Dolar Blue
+    
+    orden = crear_orden
+    producto = crear_producto
+
+    detalle_orden1 = DetalleOrden.objects.create(
+            orden=orden,
+            cantidad=2,
+            producto=producto,
+            precio = producto.precio
+        )
+
+    #Valor de la orden en dolares
+    valor_total_usd_orden = orden.get_total_usd()
+    
+    #Valore esperado
+    valor_total_esperado = Decimal('36000.00')/Decimal('800.00').quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+    
+    # Verificar que el valor devuelto por el método es el esperado
+    assert valor_total_usd_orden == valor_total_esperado
+

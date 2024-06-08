@@ -72,6 +72,27 @@ Ejercicio N° 4 -
 fallo al intentar procesar la cantidad de un producto que sea mayor al stock de ese
 producto
 '''
+@pytest.mark.django_db
+def test_ejercicio_4(api_client,crear_producto,crear_orden):
+    mensaje_error_stock = 'No tenemos suficiente stock.' #Es el mensaje que se retorna en caso de un error en el stock
+    client = api_client
+    #Producto con stock de 5 unidades
+    producto = crear_producto
+    orden = crear_orden
+
+    data = {
+        'cantidad':6,
+        'producto':str(producto.id)
+    }
+
+    response = client.post(f'/api/v1/ordenes/{str(orden.id)}/detalle/',data=data)
+    response_json = response.json()
+
+    '''
+    El status code deberia ser un 409 = Conflict ya que no se puede procesar la creacion del detalle orden
+    si no tenemos stock del producto'''
+    assert response.status_code == 409
+    assert response_json['error'] == mensaje_error_stock
 
 '''
 Ejercicio N° 5 - 

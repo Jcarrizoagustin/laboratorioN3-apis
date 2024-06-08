@@ -12,6 +12,23 @@ def api_client():
 ## PRODUCTOS ##
 
 @pytest.fixture
+def crear_producto_fixture():
+    producto, _ = Producto.objects.get_or_create(
+        nombre = 'Camisa',
+        precio = 18000.00,
+        stock = 5
+    )
+    return producto
+
+
+
+def crear_orden():
+    orden, _ = Orden.objects.get_or_create(
+        id=None,
+        fecha_hora=None
+    )
+    return orden
+
 def crear_producto():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Camisa',
@@ -20,7 +37,6 @@ def crear_producto():
     )
     return producto
 
-@pytest.fixture
 def crear_productos():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Remera',
@@ -34,23 +50,37 @@ def crear_productos():
     )
     return [producto,producto2]
 
-## ORDENES ##
+## ORDENES - DETALLE ORDEN ##
+@pytest.fixture
+def crear_orden_con_detalle():
+    orden = crear_orden()
+    producto = crear_producto()
+    
+    detalle,_ = DetalleOrden.objects.get_or_create(
+        orden = orden,
+        producto = producto,
+        cantidad = 2,
+        precio = producto.precio
+    )
+    return detalle
 
 @pytest.fixture
-def crear_orden():
-    orden, _ = Orden.objects.get_or_create(
-        id=None,
-        fecha_hora=None
-    )
-    return orden
+def crear_orden_con_detalles():
+    orden = crear_orden()
+    producto1, producto2 = crear_productos()
 
-## ORDENES - DETALLE ORDEN ##
+    detalles,_ = DetalleOrden.objects.get_or_create(
+        orden = orden,
+        cantidad = 2,
+        producto = producto1,
+        precio = producto1.precio
 
-'''@pytest.fixture(params=[True])
-def crear_detalle_orden(orden_id, producto_id,cantidad):
-    detalle_orden, _ = DetalleOrden.objects.get_or_create(
-        orden = orden_id,
-        cantidad = cantidad,
-        producto = producto_id
     )
-    return detalle_orden'''
+    detalles2,_ = DetalleOrden.objects.get_or_create(
+        orden = orden,
+        cantidad = 3,
+        producto = producto2,
+        precio = producto2.precio
+    )
+    return [detalles,detalles2]
+

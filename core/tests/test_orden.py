@@ -57,19 +57,17 @@ fallo al intentar procesar la cantidad de un producto que sea mayor al stock de 
 producto
 '''
 @pytest.mark.django_db
-def test_ejercicio_4(api_client,crear_producto,crear_orden):
+def test_falla_crear_detalle_orden(api_client, crear_orden_con_detalle):
     mensaje_error_stock = 'No tenemos suficiente stock.' #Es el mensaje que se retorna en caso de un error en el stock
     client = api_client
-    #Producto con stock de 5 unidades
-    producto = crear_producto
-    orden = crear_orden
+    detalle = crear_orden_con_detalle
 
     data = {
         'cantidad':6,
-        'producto':str(producto.id)
+        'producto':str(detalle.producto.id)
     }
 
-    response = client.post(f'/api/v1/ordenes/{str(orden.id)}/detalle/',data=data)
+    response = client.post(f'/api/v1/ordenes/{str(detalle.orden.id)}/detalle/',data=data)
     response_json = response.json()
 
     '''

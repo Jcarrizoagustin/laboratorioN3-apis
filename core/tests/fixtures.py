@@ -21,7 +21,7 @@ def crear_producto_fixture():
     return producto
 
 
-
+@pytest.fixture
 def crear_orden():
     orden, _ = Orden.objects.get_or_create(
         id=None,
@@ -29,6 +29,7 @@ def crear_orden():
     )
     return orden
 
+@pytest.fixture
 def crear_producto():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Camisa',
@@ -37,6 +38,7 @@ def crear_producto():
     )
     return producto
 
+@pytest.fixture
 def crear_productos():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Remera',

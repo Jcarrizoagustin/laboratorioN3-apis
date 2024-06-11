@@ -1,4 +1,4 @@
-from .fixtures import api_client, crear_orden_con_detalle, crear_orden_con_detalles
+from .fixtures import api_client, crear_orden_con_detalle, crear_orden_con_detalles, crear_orden, crear_producto
 from .fixtures import crear_producto
 from core.models import DetalleOrden, Orden, Producto
 from django.urls import reverse
@@ -33,13 +33,34 @@ def test_recuperar_orden_detalles(api_client, crear_orden_con_detalle):
     assert datos['product']['nombre'] == detalle.producto.nombre
     assert Decimal(datos['product']['precio']) == detalle.producto.precio
 
-
 '''
 Ejercicio N° 2 - 
     Verificar que al ejecutar el endpoint de creación de un detalle de orden, ésta se cree
     correctamente, controlando que se haya actualizado el stock de producto relacionado.
 '''
+@pytest.mark.django_db
+def test_crear_detalle_orden(api_client,crear_orden,crear_producto):
+    client = api_client
+    orden = crear_orden
+    producto = crear_producto #stock inicial 5 unidades
 
+    detalle_orden_body = {
+        'orden':orden.id,
+        'cantidad':2,
+        'producto':producto.id
+    }
+
+    response = client.post(f'/api/v1/ordenes/{str(orden.id)}/detalle/',data=detalle_orden_body)
+    response_producto = client.get(f'/api/v1/productos/{str(producto.id)}/')
+
+    response_producto_json = response_producto.json()
+    stock_producto_actualizado = int(response_producto_json['stock'])
+
+    assert response.status_code == 201
+    
+    #Verifico que se haya actualizado el stock con exito
+    assert stock_producto_actualizado != 5
+    assert stock_producto_actualizado == 3
 
 '''
 Ejercicio N° 3 - 
@@ -48,7 +69,9 @@ Ejercicio N° 3 -
     de productos total para la orden y no existan dos registros de detalle orden con el
     mismo producto.
 '''
-
+@pytest.mark.django_db
+def test_ejercicio_3():
+    pass
 
 '''
 Ejercicio N° 4 - 

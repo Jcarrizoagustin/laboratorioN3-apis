@@ -9,6 +9,15 @@ def api_client():
     from rest_framework.test import APIClient
     return APIClient()
 
+## ORDEN ##
+@pytest.fixture
+def crear_orden_fixture():
+    orden, _ = Orden.objects.get_or_create(
+        id=None,
+        fecha_hora=None
+    )
+    return orden
+
 ## PRODUCTOS ##
 
 @pytest.fixture
@@ -21,7 +30,6 @@ def crear_producto_fixture():
     return producto
 
 
-@pytest.fixture
 def crear_orden():
     orden, _ = Orden.objects.get_or_create(
         id=None,
@@ -29,7 +37,6 @@ def crear_orden():
     )
     return orden
 
-@pytest.fixture
 def crear_producto():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Camisa',
@@ -38,7 +45,6 @@ def crear_producto():
     )
     return producto
 
-@pytest.fixture
 def crear_productos():
     producto, _ = Producto.objects.get_or_create(
         nombre = 'Remera',

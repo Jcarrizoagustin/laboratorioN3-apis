@@ -1,5 +1,4 @@
-from .fixtures import api_client, crear_orden_con_detalle, crear_orden_con_detalles, crear_orden, crear_producto
-from .fixtures import crear_producto
+from .fixtures import api_client, crear_orden_con_detalle, crear_orden_con_detalles, crear_orden_fixture, crear_producto_fixture,crear_producto
 from core.models import DetalleOrden, Orden, Producto
 from django.urls import reverse
 from unittest import mock
@@ -39,10 +38,10 @@ Ejercicio N° 2 -
     correctamente, controlando que se haya actualizado el stock de producto relacionado.
 '''
 @pytest.mark.django_db
-def test_crear_detalle_orden(api_client,crear_orden,crear_producto):
+def test_crear_detalle_orden(api_client,crear_orden_fixture,crear_producto_fixture):
     client = api_client
-    orden = crear_orden
-    producto = crear_producto #stock inicial 5 unidades
+    orden = crear_orden_fixture
+    producto = crear_producto_fixture #stock inicial 5 unidades
 
     detalle_orden_body = {
         'orden':orden.id,
@@ -57,7 +56,7 @@ def test_crear_detalle_orden(api_client,crear_orden,crear_producto):
     stock_producto_actualizado = int(response_producto_json['stock'])
 
     assert response.status_code == 201
-    
+
     #Verifico que se haya actualizado el stock con exito
     assert stock_producto_actualizado != 5
     assert stock_producto_actualizado == 3
@@ -70,8 +69,46 @@ Ejercicio N° 3 -
     mismo producto.
 '''
 @pytest.mark.django_db
-def test_ejercicio_3():
-    pass
+def test_ejercicio_3(api_client,crear_orden_fixture,crear_producto_fixture):
+    client = api_client
+    orden = crear_orden_fixture
+    producto = crear_producto_fixture
+
+    detalle_orden_body_1 = {
+        'orden':orden.id,
+        'cantidad':2,
+        'producto':producto.id
+    }
+
+    detalle_orden_body_2 = {
+        'orden':orden.id,
+        'cantidad':1,
+        'producto':producto.id
+    }
+
+    response_1_do = client.post(f'/api/v1/ordenes/{str(orden.id)}/detalle/',data=detalle_orden_body_1)
+    response_1_do_json = response_1_do.json()
+    cantidad_detalle_orden_1 = int(response_1_do_json['cantidad'])
+
+    assert response_1_do.status_code == 201
+    assert cantidad_detalle_orden_1 == 2
+
+    #Vuelvo a crear un detalle orden para una orden con el mismo producto
+    response_2_do = client.post(f'/api/v1/ordenes/{str(orden.id)}/detalle/',data=detalle_orden_body_2)
+    response_2_do_json = response_2_do.json()
+
+    cantidad_detalle_orden_2 = int(response_2_do_json['cantidad'])
+
+    #Verifico que la cantidad sea 2 del anterior post + 1 del actual = 3
+    assert response_2_do.status_code == 200
+    assert cantidad_detalle_orden_2 == 3
+
+    #Obtengo todos los detalle ordenes para la orden creada en el fixture
+    detalle_ordenes = client.get(f'/api/v1/ordenes/{str(orden.id)}/detalle/')
+    detalle_ordenes_json = detalle_ordenes.json()
+
+    #Verifico que la cantidad de detalle ordenes sea 1
+    assert len(detalle_ordenes_json) == 1
 
 '''
 Ejercicio N° 4 - 

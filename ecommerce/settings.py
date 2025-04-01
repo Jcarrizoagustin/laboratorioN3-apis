@@ -134,3 +134,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DOLAR_BLUE_API_URL = 'https://dolarapi.com/v1/dolares/blue'
+
+# Configuración para pruebas con Selenium
+SELENIUM_DRIVER = 'chrome'  # Puedes usar 'firefox', 'edge', etc.

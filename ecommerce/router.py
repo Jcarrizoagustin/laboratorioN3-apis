@@ -1,7 +1,7 @@
 #from rest_framework import routers
 from rest_framework_nested import routers
 from core import api
-from rest_framework.documentation import include_docs_urls
+#from rest_framework.documentation import include_docs_urls
 
 #Inicializar enrutamiento en DRF
 router = routers.DefaultRouter()

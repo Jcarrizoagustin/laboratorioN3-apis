@@ -136,6 +136,8 @@ def test_falla_crear_detalle_orden(api_client, crear_orden_con_detalle):
     assert response.status_code == 409
     assert response_json['error'] == mensaje_error_stock
 
+
+
 '''
 Ejercicio N° 5 - 
     Verificar que al ejecutar el endpoint de eliminación de una orden, ésta se haya

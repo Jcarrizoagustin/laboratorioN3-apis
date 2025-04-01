@@ -9,7 +9,8 @@ def test_recuperar_producto(api_client,crear_producto_fixture):
     client = api_client
 
     response = client.get(f'/api/v1/productos/{producto.id}/')
+    
     assert response.json()['id'] == str(producto.id)
-    assert response.json()['nombre'] == 'Camisa'
+    assert response.json()['nombre'] == 'Test'
     assert response.json()['stock'] == 5
     assert response.status_code == 200

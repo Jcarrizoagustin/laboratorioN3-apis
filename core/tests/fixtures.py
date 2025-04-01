@@ -23,7 +23,7 @@ def crear_orden_fixture():
 @pytest.fixture
 def crear_producto_fixture():
     producto, _ = Producto.objects.get_or_create(
-        nombre = 'Camisa',
+        nombre = 'Test',
         precio = 18000.00,
         stock = 5
     )

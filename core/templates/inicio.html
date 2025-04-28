@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TiendaOnline - Tu mejor opción</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://wallpaperaccess.com/full/2593105.jpg');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 100px 0;
+        }
+        .category-card {
+        transition: transform 0.3s ease;
+        }
+        .category-card:hover {
+        transform: translateY(-10px);
+        }
+        .feature-icon {
+        font-size: 2.5rem;
+        color: #0d6efd;
+        margin-bottom: 1rem;
+        }
+        /* Estilos para corregir los botones del carrusel */
+        #productCarousel .carousel-control-prev,
+        #productCarousel .carousel-control-next {
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            top: auto;
+            bottom: 0;
+            margin-bottom: -50px;
+        }
+        
+        #productCarousel .carousel-control-prev {
+            left: 45%;
+        }
+        
+        #productCarousel .carousel-control-next {
+            right: 45%;
+        }
+        
+        #productCarousel .carousel-indicators {
+            bottom: -50px;
+        }
+        
+        #productCarousel {
+            padding-bottom: 60px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">TiendaOnline</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    Categorías
+                    </a>
+                    <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Electrónica</a></li>
+                    <li><a class="dropdown-item" href="#">Ropa</a></li>
+                    <li><a class="dropdown-item" href="#">Hogar</a></li>
+                    <li><a class="dropdown-item" href="#">Deportes</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Ofertas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Novedades</a>
+                </li>
+                </ul>
+                <form class="d-flex me-2">
+                <input class="form-control me-2" type="search" placeholder="Buscar productos...">
+                <button class="btn btn-outline-light" type="submit">Buscar</button>
+                </form>
+                <div class="d-flex">
+                <a href="#" class="btn btn-outline-light me-2">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a href="#" class="btn btn-primary position-relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    3
+                    </span>
+                </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center">
+        <div class="container">
+        <h1 class="display-4 fw-bold">Bienvenidos a TiendaOnline</h1>
+        <p class="lead mb-4">Descubre miles de productos con los mejores precios y envío gratuito</p>
+        <a href="#" class="btn btn-primary btn-lg px-4 me-2">Ver ofertas</a>
+        <a href="#" class="btn btn-outline-light btn-lg px-4">Registrarse</a>
+        </div>
+    </section>
+
+    <!-- Banner promocional -->
+    <div class="bg-danger text-white p-2 text-center">
+        <div class="container">
+        <p class="mb-0">🔥 ¡OFERTA ESPECIAL! 25% de descuento en todos los productos - Usa el código GESTIONWEB 🔥</p>
+        </div>
+    </div>
+
+    <!-- Productos destacados -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Productos destacados</h2>
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1"></button>
+                </div>
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Smartphone XYZ</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">$399.99</span>
+                                    <span class="text-decoration-line-through text-muted">$499.99</span>
+                                    </div>
+                                    <div class="mt-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star-half-alt text-warning"></i>
+                                    <small class="ms-1">(234)</small>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Auriculares Bluetooth</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">$89.99</span>
+                                    <span class="text-decoration-line-through text-muted">$129.99</span>
+                                    </div>
+                                    <div class="mt-2">
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <i class="far fa-star text-warning"></i>
+                                    <small class="ms-1">(178)</small>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">Zapatillas Deportivas</h5>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-danger fw-bold">$79.99</span>
+                                    <span class="text-decoration-line-through text-muted">$99.99</span>
+                                    </div>
+                                    <div class="mt-2">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <i class="fas fa-star text-warning"></i>
+                                    <small class="ms-1">(345)</small>
+                                    </div>
+                                    <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Smartwatch Pro</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-danger fw-bold">$149.99</span>
+                                <span class="text-decoration-line-through text-muted">$199.99</span>
+                                </div>
+                                <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                                <small class="ms-1">(97)</small>
+                                </div>
+                                <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row">
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Laptop Ultra</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-danger fw-bold">$899.99</span>
+                                <span class="text-decoration-line-through text-muted">$1099.99</span>
+                                </div>
+                                <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <small class="ms-1">(432)</small>
+                                </div>
+                                <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Cámara Digital</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-danger fw-bold">$449.99</span>
+                                <span class="text-decoration-line-through text-muted">$549.99</span>
+                                </div>
+                                <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                                <small class="ms-1">(213)</small>
+                                </div>
+                                <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Altavoz Bluetooth</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-danger fw-bold">$69.99</span>
+                                <span class="text-decoration-line-through text-muted">$89.99</span>
+                                </div>
+                                <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                                <i class="far fa-star text-warning"></i>
+                                <small class="ms-1">(145)</small>
+                                </div>
+                                <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Tablet Pro</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-danger fw-bold">$299.99</span>
+                                <span class="text-decoration-line-through text-muted">$349.99</span>
+                                </div>
+                                <div class="mt-2">
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star text-warning"></i>
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                                <small class="ms-1">(287)</small>
+                                </div>
+                                <button class="btn btn-primary w-100 mt-3">Añadir al carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
+            </div>
+        </div>  
+    </section>
+
+    <!-- Categorías -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Explora nuestras categorías</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="card category-card h-100 shadow-sm">
+                        <img src="https://i0.wp.com/lemmymorgan.com/wp-content/uploads/2022/05/Top-10-sports-gadgets-that-all-students-use.jpeg?resize=1536%2C1016&ssl=1" class="card-img-top" alt="Electrónica">
+                        <div class="card-body text-center">
+                        <h5 class="card-title">Electrónica</h5>
+                        <p class="card-text">Lo último en tecnología</p>
+                        <a href="#" class="btn btn-outline-primary">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card category-card h-100 shadow-sm">
+                        <img src="https://img.freepik.com/foto-gratis/tienda-ropa-tienda-ropa-perchas-tienda-boutique-moderna_1150-8886.jpg" class="card-img-top" alt="Ropa">
+                        <div class="card-body text-center">
+                        <h5 class="card-title">Ropa</h5>
+                        <p class="card-text">Moda para todos</p>
+                        <a href="#" class="btn btn-outline-primary">Ver productos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                <div class="card category-card h-100 shadow-sm">
+                    <img src="https://bricogenial.com/wp-content/uploads/productos-imprescindibles-para-el-hogar-descubre-cuales-no-te-pueden-faltar.webp" class="card-img-top" alt="Hogar">
+                    <div class="card-body text-center">
+                    <h5 class="card-title">Hogar</h5>
+                    <p class="card-text">Todo para tu casa</p>
+                    <a href="#" class="btn btn-outline-primary">Ver productos</a>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-3">
+                <div class="card category-card h-100 shadow-sm">
+                    <img src="https://static.vecteezy.com/system/resources/previews/023/508/686/original/sports-equipment-cartoon-illustration-hand-drawn-elements-sports-games-equipment-vector.jpg" class="card-img-top" alt="Deportes">
+                    <div class="card-body text-center">
+                    <h5 class="card-title">Deportes</h5>
+                    <p class="card-text">Mantente activo</p>
+                    <a href="#" class="btn btn-outline-primary">Ver productos</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Características -->
+    <section class="py-5">
+        <div class="container">
+        <h2 class="text-center mb-4">¿Por qué elegirnos?</h2>
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-truck"></i>
+            </div>
+            <h4>Envío gratuito</h4>
+            <p>En todos los pedidos superiores a $50</p>
+            </div>
+            <div class="col-md-3 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-undo"></i>
+            </div>
+            <h4>Devoluciones fáciles</h4>
+            <p>30 días para devoluciones</p>
+            </div>
+            <div class="col-md-3 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h4>Pago seguro</h4>
+            <p>Transacciones 100% seguras</p>
+            </div>
+            <div class="col-md-3 text-center">
+            <div class="feature-icon">
+                <i class="fas fa-headset"></i>
+            </div>
+            <h4>Soporte 24/7</h4>
+            <p>Estamos aquí para ayudarte</p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <h5>TiendaOnline</h5>
+                    <p class="text-muted">Tu tienda de confianza para encontrar los mejores productos al mejor precio.</p>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Enlaces rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Inicio</a></li>
+                        <li><a href="#" class="text-white">Productos</a></li>
+                        <li><a href="#" class="text-white">Ofertas</a></li>
+                        <li><a href="#" class="text-white">Mi cuenta</a></li>
+                        <li><a href="#" class="text-white">Sobre nosotros</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Ayuda</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">FAQ</a></li>
+                        <li><a href="#" class="text-white">Envíos</a></li>
+                        <li><a href="#" class="text-white">Devoluciones</a></li>
+                        <li><a href="#" class="text-white">Estado del pedido</a></li>
+                        <li><a href="#" class="text-white">Métodos de pago</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Contacto</h5>
+                    <ul class="list-unstyled text-white">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Calle Comercio 123, Ciudad</li>
+                        <li><i class="fas fa-phone me-2"></i> +34 912 345 678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@tiendaonline.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="small text-white mb-0">© 2025 TiendaOnline - Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

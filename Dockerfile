@@ -15,6 +15,10 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copio el resto del código
 COPY . .
 
+#Genera una carpeta de contenidos estaticos
+RUN python manage.py collectstatic --noinput
+
+
 # Expongo el puerto
 EXPOSE 8000
 

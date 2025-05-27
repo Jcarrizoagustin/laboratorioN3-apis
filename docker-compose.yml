@@ -3,12 +3,10 @@ version: '3.9'
 services:
   web:
     build: .
+    image: ecommerce_app:v1
     container_name: web
     expose:
       - "8000"
-    # En desarrollo podrías usar:
-    # volumes:
-    #   - .:/home/app
 
   nginx:
     image: nginx:alpine

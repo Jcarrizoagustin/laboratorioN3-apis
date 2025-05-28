@@ -3,7 +3,7 @@ version: '3.9'
 services:
   web:
     build: .
-    image: ecommerce_app:v1
+    image: juarezdaniei97/ecommerce_app:v1
     container_name: web
     expose:
       - "8000"
